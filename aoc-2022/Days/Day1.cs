@@ -1,20 +1,22 @@
-﻿namespace aoc_2022.Days;
+﻿using BenchmarkDotNet.Attributes;
 
-public class Day1 : IDay
+namespace aoc_2022.Days;
+
+public static class Day1
 {
-    public string RunPart1(string filePath)
+    public static string Part1(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
-        return calories[0].ToString();
+        return calories.First().ToString();
     }
 
-    public string RunPart2(string filePath)
+    public static string Part2(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
-        return (calories[0] + calories[1] + calories[2]).ToString();
+        return calories.Take(3).Sum().ToString();
     }
 
-    private List<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
+    private static IEnumerable<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
     {
         return File.ReadAllText(filePath)
             .Split("\r\n\r\n")
@@ -22,7 +24,6 @@ public class Day1 : IDay
                 .Split("\r\n")
                 .Select(int.Parse)
                 .Sum())
-            .OrderByDescending(g => g)
-            .ToList();
+            .OrderByDescending(g => g);
     }
 }
