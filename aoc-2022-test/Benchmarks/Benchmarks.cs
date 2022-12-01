@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aoc_2022.Days
+namespace aoc_2022_test.Benchmarks
 {
     public class DaysBenchmark
     {

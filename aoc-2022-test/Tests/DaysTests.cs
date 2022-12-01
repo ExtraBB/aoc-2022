@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace aoc_2022_test;
+namespace aoc_2022_test.Tests;
 
 public class DaysTests
 {

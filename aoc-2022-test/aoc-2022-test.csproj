@@ -26,4 +26,13 @@
     <ProjectReference Include="..\aoc-2022\aoc-2022.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\1-actual.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\1-example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
