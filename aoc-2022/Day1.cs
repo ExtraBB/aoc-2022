@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 
-namespace aoc_2022.Days;
+namespace aoc_2022;
 
 public static class Day1
 {

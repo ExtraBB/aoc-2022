@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using aoc_2022;
+using BenchmarkDotNet.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

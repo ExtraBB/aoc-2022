@@ -12,7 +12,7 @@ public class DaysTests
     public void TestAll(int day, int part, string type, string expected)
     {
         // Arrange
-        MethodInfo method = GetType($"aoc_2022.Days.Day{day}")!.GetMethod($"Part{part}")!;
+        MethodInfo method = GetType($"aoc_2022.Day{day}")!.GetMethod($"Part{part}")!;
 
         // Act
         string actual = (string)method.Invoke(null, new[] { $"./Files/{day}-{type}.txt" })!;
