@@ -1,6 +1,4 @@
-﻿using aoc_2022.Utils;
-
-namespace aoc_2022.Days;
+﻿namespace aoc_2022.Days;
 
 public class Day1 : IDay
 {
@@ -18,7 +16,13 @@ public class Day1 : IDay
 
     private List<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
     {
-        var groups = FileUtils.ReadLineGroups(filePath, int.Parse);
-        return groups.Select(g => g.Sum()).OrderByDescending(g => g).ToList();
+        return File.ReadAllText(filePath)
+            .Split("\r\n\r\n")
+            .Select(group => group
+                .Split("\r\n")
+                .Select(int.Parse)
+                .Sum())
+            .OrderByDescending(g => g)
+            .ToList();
     }
 }
