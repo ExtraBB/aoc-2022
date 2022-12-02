@@ -6,9 +6,13 @@ public class DaysTests
 {
     [Theory]
     [InlineData(1, 1, "example", "24000")]
-    [InlineData(1, 2, "example", "45000")]
     [InlineData(1, 1, "actual", "72478")]
+    [InlineData(1, 2, "example", "45000")]
     [InlineData(1, 2, "actual", "210367")]
+    [InlineData(2, 1, "example", "15")]
+    [InlineData(2, 1, "actual", "14827")]
+    [InlineData(2, 2, "example", "12")]
+    [InlineData(2, 2, "actual", "13889")]
     public void TestAll(int day, int part, string type, string expected)
     {
         // Arrange
