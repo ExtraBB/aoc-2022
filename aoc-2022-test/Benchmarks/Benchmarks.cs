@@ -13,25 +13,25 @@ namespace aoc_2022_test.Benchmarks
         [Benchmark]
         public void Day1Part1()
         {
-            Day1.Part1("./Files/1-actual.txt");
+            new Day1().Part1("./Files/1-actual.txt");
         }
 
         [Benchmark]
         public void Day1Part2()
         {
-            Day1.Part2("./Files/1-actual.txt");
+            new Day1().Part2("./Files/1-actual.txt");
         }
 
         [Benchmark]
         public void Day2Part1()
         {
-            Day2.Part1("./Files/2-actual.txt");
+            new Day2().Part1("./Files/2-actual.txt");
         }
 
         [Benchmark]
         public void Day2Part2()
         {
-            Day2.Part2("./Files/2-actual.txt");
+            new Day2().Part2("./Files/2-actual.txt");
         }
     }
 }

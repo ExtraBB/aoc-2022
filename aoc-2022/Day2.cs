@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace aoc_2022
 {
-    public static class Day2
+    public class Day2 : IDay
     {
-        private static Dictionary<string, int> scoresPart1 = new Dictionary<string, int>()
+        private Dictionary<string, int> scoresPart1 = new Dictionary<string, int>()
         {
             {"A X", 1 + 3 },
             {"A Y", 2 + 6 },
@@ -21,7 +21,7 @@ namespace aoc_2022
             {"C Z", 3 + 3 },
         };
 
-        private static Dictionary<string, int> scoresPart2 = new Dictionary<string, int>()
+        private Dictionary<string, int> scoresPart2 = new Dictionary<string, int>()
         {
             {"A X", 3 + 0 },
             {"A Y", 1 + 3 },
@@ -34,12 +34,12 @@ namespace aoc_2022
             {"C Z", 1 + 6 },
         };
 
-        public static string Part1(string filePath)
+        public string Part1(string filePath)
         {
             return File.ReadAllLines(filePath).Sum(line => scoresPart1[line]).ToString();
         }
 
-        public static string Part2(string filePath)
+        public string Part2(string filePath)
         {
             return File.ReadAllLines(filePath).Sum(line => scoresPart2[line]).ToString();
         }

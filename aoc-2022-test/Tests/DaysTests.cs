@@ -13,13 +13,19 @@ public class DaysTests
     [InlineData(2, 1, "actual", "14827")]
     [InlineData(2, 2, "example", "12")]
     [InlineData(2, 2, "actual", "13889")]
+    [InlineData(3, 1, "example", "157")]
+    [InlineData(3, 1, "actual", "7980")]
+    [InlineData(3, 2, "example", "70")]
+    [InlineData(3, 2, "actual", "2881")]
     public void TestAll(int day, int part, string type, string expected)
     {
         // Arrange
-        MethodInfo method = GetType($"aoc_2022.Day{day}")!.GetMethod($"Part{part}")!;
+        IDay dayObject = (IDay)Activator.CreateInstance(GetType($"aoc_2022.Day{day}"))!;
 
         // Act
-        string actual = (string)method.Invoke(null, new[] { $"./Files/{day}-{type}.txt" })!;
+        string actual = part == 1
+            ? dayObject.Part1($"./Files/{day}-{type}.txt")
+            : dayObject.Part2($"./Files/{day}-{type}.txt");
 
         // Assert
         Assert.Equal(expected, actual);

@@ -2,21 +2,21 @@
 
 namespace aoc_2022;
 
-public static class Day1
+public class Day1 : IDay
 {
-    public static string Part1(string filePath)
+    public string Part1(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
         return calories.First().ToString();
     }
 
-    public static string Part2(string filePath)
+    public string Part2(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
         return calories.Take(3).Sum().ToString();
     }
 
-    private static IEnumerable<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
+    private IEnumerable<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
     {
         return File.ReadAllText(filePath)
             .Split("\r\n\r\n")
