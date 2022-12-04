@@ -1,6 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
-
-namespace aoc_2022;
+﻿namespace aoc_2022;
 
 public class Day1 : IDay
 {

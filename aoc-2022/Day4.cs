@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace aoc_2022
 {
@@ -13,17 +8,18 @@ namespace aoc_2022
 
         public string Part1(string filePath)
         {
-            return File.ReadAllLines(filePath).Select(ParseRanges).Where(IsFullyContained).Count().ToString();
+            return File.ReadAllLines(filePath)
+                .Select(line => Helpers.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
+                .Count(IsFullyContained)
+                .ToString();
         }
 
         public string Part2(string filePath)
         {
-            return File.ReadAllLines(filePath).Select(ParseRanges).Where(Overlap).Count().ToString();
-        }
-
-        private int[] ParseRanges(string line)
-        {
-            return regex.Match(line).Groups.Values.Skip(1).Select(g => int.Parse(g.Value)).ToArray();
+            return File.ReadAllLines(filePath)
+                .Select(line => Helpers.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
+                .Count(Overlap)
+                .ToString();
         }
 
         private bool IsFullyContained(int[] ranges)
