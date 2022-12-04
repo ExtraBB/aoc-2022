@@ -4,7 +4,7 @@ namespace aoc_2022
 {
     public class Day4 : IDay
     {
-        Regex regex = new Regex(@"(\d+)\-(\d+)\,(\d+)\-(\d+)");
+        Regex regex = new Regex(@"(\d{1,2})\-(\d{1,2})\,(\d{1,2})\-(\d{1,2})");
 
         public string Part1(string filePath)
         {
