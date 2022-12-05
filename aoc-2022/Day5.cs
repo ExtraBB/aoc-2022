@@ -19,7 +19,7 @@ namespace aoc_2022
             List<Stack<char>> stacks = CreateStacks(split[0]);
             foreach(string instruction in split[1].Split("\r\n"))
             {
-                ProcessInstruction(instruction, stacks);
+                ProcessInstructionOneByOne(instruction, stacks);
             }
 
             return stacks.Aggregate("", (a, b) => a + b.Peek().ToString());
@@ -27,7 +27,16 @@ namespace aoc_2022
 
         public string Part2(string filePath)
         {
-            throw new NotImplementedException();
+            string text = File.ReadAllText(filePath);
+            var split = text.Split("\r\n\r\n");
+
+            List<Stack<char>> stacks = CreateStacks(split[0]);
+            foreach (string instruction in split[1].Split("\r\n"))
+            {
+                ProcessInstructionAsGroup(instruction, stacks);
+            }
+
+            return stacks.Aggregate("", (a, b) => a + b.Peek().ToString());
         }
 
         private List<Stack<char>> CreateStacks(string input)
@@ -54,18 +63,39 @@ namespace aoc_2022
             return stacks;
         }
 
-        private void ProcessInstruction(string instruction, List<Stack<char>> stacks)
+        private void ProcessInstructionOneByOne(string instruction, List<Stack<char>> stacks)
         {
             int[] numbers = Helpers.ParseGroupsFromStringAndConvert(instructionRegex, instruction, int.Parse);
-            for (int i = 0; i < numbers[0]; i++)
-            {
-                while (numbers[2] - 1 > stacks.Count)
-                {
-                    stacks.Add(new Stack<char>());
-                }
 
-                stacks[numbers[2] - 1].Push(stacks[numbers[1] - 1].Pop());
+            while (numbers[2] - 1 > stacks.Count)
+            {
+                stacks.Add(new Stack<char>());
             }
+
+            MoveFromStack(stacks[numbers[1] - 1], stacks[numbers[2] - 1], numbers[0]);
+        }
+
+        private void MoveFromStack(Stack<char> a, Stack<char> b, int numToMove) 
+        {
+            for (int i = 0; i < numToMove; i++)
+            {
+                a.Push(b.Pop());
+            }
+        }
+
+        private void ProcessInstructionAsGroup(string instruction, List<Stack<char>> stacks)
+        {
+            int[] numbers = Helpers.ParseGroupsFromStringAndConvert(instructionRegex, instruction, int.Parse);
+
+            Stack<char> intermediateStack = new Stack<char>();
+
+            while (numbers[2] - 1 > stacks.Count)
+            {
+                stacks.Add(new Stack<char>());
+            }
+
+            MoveFromStack(stacks[numbers[1] - 1], intermediateStack, numbers[0]);
+            MoveFromStack(intermediateStack, stacks[numbers[2] - 1], numbers[0]);
         }
     }
 }

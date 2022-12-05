@@ -23,7 +23,7 @@ public class DaysTests
     [InlineData(4, 2, "actual", "861")]
     [InlineData(5, 1, "example", "CMZ")]
     [InlineData(5, 1, "actual", "TPGVQPFDH")]
-    [InlineData(5, 2, "example", "5")]
+    [InlineData(5, 2, "example", "MCD")]
     [InlineData(5, 2, "actual", "861")]
     public void TestAll(int day, int part, string type, string expected)
     {
