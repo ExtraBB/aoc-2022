@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace aoc_2022
 {
@@ -8,60 +9,59 @@ namespace aoc_2022
 
         public string Part1(string filePath)
         {
-            return Process(filePath, 1);
+            return ProcessInstructions(filePath, 1);
         }
 
         public string Part2(string filePath)
         {
-            return Process(filePath, 2);
+            return ProcessInstructions(filePath, 2);
         }
 
-        private string Process(string filePath, int part)
+        private string ProcessInstructions(string filePath, int part)
         {
-            (List<Stack<char>> stacks, IEnumerable<int[]> instructions) = Parse(filePath);
+            var split = File.ReadAllText(filePath).Split("\r\n\r\n");
+            var stacks = ParseStacks(split[0]);
+            var instructions = ParseInstructions(split[1]);
 
             foreach (int[] instruction in instructions)
             {
-                while (instruction[2] - 1 > stacks.Count)
+                if (instruction is [int amount, int from, int to])
                 {
-                    stacks.Add(new Stack<char>());
-                }
+                    while (to - 1 > stacks.Count)
+                    {
+                        stacks.Add(new Stack<char>());
+                    }
 
-                if (part == 1)
-                {
-                    MoveFromStack(stacks[instruction[1] - 1], stacks[instruction[2] - 1], instruction[0]);
-                }
-                else
-                {
-                    Stack<char> intermediateStack = new Stack<char>();
-                    MoveFromStack(stacks[instruction[1] - 1], intermediateStack, instruction[0]);
-                    MoveFromStack(intermediateStack, stacks[instruction[2] - 1], instruction[0]);
+                    if (part == 1)
+                    {
+                        MoveFromStack(stacks[from - 1], stacks[to - 1], amount);
+                    }
+                    else
+                    {
+                        Stack<char> intermediateStack = new Stack<char>();
+                        MoveFromStack(stacks[from - 1], intermediateStack, amount);
+                        MoveFromStack(intermediateStack, stacks[to - 1], amount);
+                    }
                 }
             }
 
             return stacks.Aggregate("", (a, b) => a + b.Peek().ToString());
         }
 
-        private (List<Stack<char>> stacks, IEnumerable<int[]> instructions) Parse(string filePath)
-        {
-            string text = File.ReadAllText(filePath);
-            var split = text.Split("\r\n\r\n");
-
-            List<Stack<char>> stacks = CreateStacks(split[0]);
-            IEnumerable<int[]> instructions = split[1]
-                .Split("\r\n")
-                .Select(line => Helpers.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
-
-            return (stacks, instructions);
-        }
-
-        private List<Stack<char>> CreateStacks(string input)
+        private List<Stack<char>> ParseStacks(string input)
         {
             var lines = input.Split("\r\n");
             return Enumerable
                 .Range(0, lines.Last().Length / 4 + 1)
                 .Select(i => new Stack<char>(lines.Select(l => l[i * 4 + 1]).Where(char.IsLetter).Reverse()))
                 .ToList();
+        }
+
+        private IEnumerable<int[]> ParseInstructions(string input)
+        {
+            return input
+                .Split("\r\n")
+                .Select(line => Helpers.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
         }
 
         private void MoveFromStack(Stack<char> from, Stack<char> to, int numToMove) 
