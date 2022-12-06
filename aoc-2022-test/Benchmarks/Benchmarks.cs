@@ -69,5 +69,17 @@ namespace aoc_2022_test.Benchmarks
         {
             new Day5().Part2("./Files/5-actual.txt");
         }
+
+        [Benchmark]
+        public void Day6Part1()
+        {
+            new Day6().Part1("./Files/6-actual.txt");
+        }
+
+        [Benchmark]
+        public void Day6Part2()
+        {
+            new Day6().Part2("./Files/6-actual.txt");
+        }
     }
 }
