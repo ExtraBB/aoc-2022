@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace aoc_2022
 {
@@ -13,30 +8,51 @@ namespace aoc_2022
 
         public string Part1(string filePath)
         {
-            string text = File.ReadAllText(filePath);
-            var split = text.Split("\r\n\r\n");
+            return Process(filePath, 1);
+        }
 
-            List<Stack<char>> stacks = CreateStacks(split[0]);
-            foreach(string instruction in split[1].Split("\r\n"))
+        public string Part2(string filePath)
+        {
+            return Process(filePath, 2);
+        }
+
+        private string Process(string filePath, int part)
+        {
+            (List<Stack<char>> stacks, IEnumerable<int[]> instructions) = Parse(filePath);
+
+            foreach (int[] instruction in instructions)
             {
-                ProcessInstructionOneByOne(instruction, stacks);
+                while (instruction[2] - 1 > stacks.Count)
+                {
+                    stacks.Add(new Stack<char>());
+                }
+
+                if (part == 1)
+                {
+                    MoveFromStack(stacks[instruction[1] - 1], stacks[instruction[2] - 1], instruction[0]);
+                }
+                else
+                {
+                    Stack<char> intermediateStack = new Stack<char>();
+                    MoveFromStack(stacks[instruction[1] - 1], intermediateStack, instruction[0]);
+                    MoveFromStack(intermediateStack, stacks[instruction[2] - 1], instruction[0]);
+                }
             }
 
             return stacks.Aggregate("", (a, b) => a + b.Peek().ToString());
         }
 
-        public string Part2(string filePath)
+        private (List<Stack<char>> stacks, IEnumerable<int[]> instructions) Parse(string filePath)
         {
             string text = File.ReadAllText(filePath);
             var split = text.Split("\r\n\r\n");
 
             List<Stack<char>> stacks = CreateStacks(split[0]);
-            foreach (string instruction in split[1].Split("\r\n"))
-            {
-                ProcessInstructionAsGroup(instruction, stacks);
-            }
+            IEnumerable<int[]> instructions = split[1]
+                .Split("\r\n")
+                .Select(line => Helpers.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
 
-            return stacks.Aggregate("", (a, b) => a + b.Peek().ToString());
+            return (stacks, instructions);
         }
 
         private List<Stack<char>> CreateStacks(string input)
@@ -63,39 +79,12 @@ namespace aoc_2022
             return stacks;
         }
 
-        private void ProcessInstructionOneByOne(string instruction, List<Stack<char>> stacks)
-        {
-            int[] numbers = Helpers.ParseGroupsFromStringAndConvert(instructionRegex, instruction, int.Parse);
-
-            while (numbers[2] - 1 > stacks.Count)
-            {
-                stacks.Add(new Stack<char>());
-            }
-
-            MoveFromStack(stacks[numbers[1] - 1], stacks[numbers[2] - 1], numbers[0]);
-        }
-
-        private void MoveFromStack(Stack<char> a, Stack<char> b, int numToMove) 
+        private void MoveFromStack(Stack<char> from, Stack<char> to, int numToMove) 
         {
             for (int i = 0; i < numToMove; i++)
             {
-                a.Push(b.Pop());
+                to.Push(from.Pop());
             }
-        }
-
-        private void ProcessInstructionAsGroup(string instruction, List<Stack<char>> stacks)
-        {
-            int[] numbers = Helpers.ParseGroupsFromStringAndConvert(instructionRegex, instruction, int.Parse);
-
-            Stack<char> intermediateStack = new Stack<char>();
-
-            while (numbers[2] - 1 > stacks.Count)
-            {
-                stacks.Add(new Stack<char>());
-            }
-
-            MoveFromStack(stacks[numbers[1] - 1], intermediateStack, numbers[0]);
-            MoveFromStack(intermediateStack, stacks[numbers[2] - 1], numbers[0]);
         }
     }
 }
