@@ -58,25 +58,10 @@ namespace aoc_2022
         private List<Stack<char>> CreateStacks(string input)
         {
             var lines = input.Split("\r\n");
-            int numStacks = (lines.Last().Length - 3) / 4 + 1;
-            List<Stack<char>> stacks = new List<Stack<char>>();
-            for (int i = 0; i < numStacks; i++)
-            {
-                stacks.Add(new Stack<char>());
-            }
-
-            foreach(string line in lines.Take(lines.Length - 1).Reverse())
-            {
-                for(int i = 0; i < line.Length; i += 4)
-                {
-                    if (char.IsLetter(line[i + 1]))
-                    {
-                        stacks[i / 4].Push(line[i + 1]);
-                    }
-                }
-            }
-
-            return stacks;
+            return Enumerable
+                .Range(0, lines.Last().Length / 4 + 1)
+                .Select(i => new Stack<char>(lines.Select(l => l[i * 4 + 1]).Where(char.IsLetter).Reverse()))
+                .ToList();
         }
 
         private void MoveFromStack(Stack<char> from, Stack<char> to, int numToMove) 
