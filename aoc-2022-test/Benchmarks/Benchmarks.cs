@@ -10,7 +10,7 @@ namespace aoc_2022_test.Benchmarks
 {
     public class DaysBenchmark
     {
-        [Benchmark]
+        [BenchmarkDotNet.Attributes.Arguments("./Files/1-actual.txt")]
         public void Day1Part1()
         {
             new Day1().Part1("./Files/1-actual.txt");

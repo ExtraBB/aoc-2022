@@ -32,7 +32,7 @@ public class DaysTests
     public void TestAll(int day, int part, string type, string expected)
     {
         // Arrange
-        IDay dayObject = (IDay)Activator.CreateInstance(GetType($"aoc_2022.Day{day}"))!;
+        IDay dayObject = (IDay)Activator.CreateInstance(Utils.GetType($"aoc_2022.Day{day}"))!;
 
         // Act
         string actual = part == 1
@@ -41,18 +41,5 @@ public class DaysTests
 
         // Assert
         Assert.Equal(expected, actual);
-    }
-
-    private static Type GetType(string typeName)
-    {
-        var type = Type.GetType(typeName);
-        if (type != null) return type;
-        foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-        {
-            type = a.GetType(typeName);
-            if (type != null)
-                return type;
-        }
-        return null;
     }
 }

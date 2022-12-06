@@ -22,18 +22,15 @@ namespace aoc_2022
             {
                 for (int i = 0; i < int.MaxValue; i++)
                 {
-                    if (i < size)
-                    {
-                        buffer.Enqueue((char)reader.Read());
-                    }
-                    else
+                    if (i >= size)
                     {
                         buffer.Dequeue();
-                        buffer.Enqueue((char)reader.Read());
-                        if (buffer.Distinct().Count() == size)
-                        {
-                            return i + 1;
-                        }
+                    }
+
+                    buffer.Enqueue((char)reader.Read());
+                    if (buffer.Distinct().Count() == size)
+                    {
+                        return i + 1;
                     }
                 }
             }
