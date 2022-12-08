@@ -1,10 +1,4 @@
-﻿using aoc_2022;
-using BenchmarkDotNet.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace aoc_2022_test.Benchmarks
 {
@@ -80,6 +74,30 @@ namespace aoc_2022_test.Benchmarks
         public void Day6Part2()
         {
             new Day6().Part2("./Files/6-actual.txt");
+        }
+
+        [Benchmark]
+        public void Day7Part1()
+        {
+            new Day7().Part1("./Files/7-actual.txt");
+        }
+
+        [Benchmark]
+        public void Day7Part2()
+        {
+            new Day7().Part2("./Files/7-actual.txt");
+        }
+
+        [Benchmark]
+        public void Day8Part1()
+        {
+            new Day8().Part1("./Files/8-actual.txt");
+        }
+
+        [Benchmark]
+        public void Day8Part2()
+        {
+            new Day8().Part2("./Files/8-actual.txt");
         }
     }
 }
