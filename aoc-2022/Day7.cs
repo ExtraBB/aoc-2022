@@ -1,25 +1,14 @@
 ﻿using aoc_2022.DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace aoc_2022
 {
-    public class Accumulator
-    {
-        public int Total { get; set; }
-    }
-
     public class Day7 : IDay
     {
         public string Part1(string filePath)
         {
             TreeNode<int> tree = BuildTree(filePath);
-            Accumulator acc = new Accumulator();
-            FindTotalFolderSizes(tree, 100_000, acc);
-            return acc.Total.ToString();
+            List<int> sizes = new List<int>();
+            FindAllFolderSizes(tree, sizes);
+            return sizes.Where(size => size <= 100_000).Sum().ToString();
         }
 
         public string Part2(string filePath)
@@ -29,24 +18,7 @@ namespace aoc_2022
             FindAllFolderSizes(tree, sizes);
 
             int missingSpace = 30_000_000 - (70_000_000 - sizes.Max());
-
             return sizes.Order().First(c => c >= missingSpace).ToString();
-        }
-
-        private int FindTotalFolderSizes(TreeNode<int> tree, int maxFolderSize, Accumulator accumulator)
-        {
-            if (tree.ChildNodes.Any())
-            {
-                int childSize = tree.ChildNodes.Values.Sum(child => FindTotalFolderSizes(child, maxFolderSize, accumulator));
-                if (childSize < maxFolderSize)
-                {
-                    accumulator.Total += childSize;
-                }
-
-                return childSize;
-            }
-            
-            return tree.Value;
         }
 
         private int FindAllFolderSizes(TreeNode<int> tree, List<int> sizes)
