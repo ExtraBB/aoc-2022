@@ -6,28 +6,30 @@ using System.Threading.Tasks;
 
 namespace aoc_2022.DataStructures
 {
-    public class TreeNode
+    public class TreeNode<T>
     {
+        public T Value { get; }
         public string Name { get; }
-        public Dictionary<string, TreeNode> ChildNodes { get; } = new Dictionary<string, TreeNode>();
-        public TreeNode? Parent { get; }
+        public Dictionary<string, TreeNode<T>> ChildNodes { get; } = new Dictionary<string, TreeNode<T>>();
+        public TreeNode<T>? Parent { get; }
 
-        public TreeNode(string name, TreeNode? parent)
+        public TreeNode(T value, string name, TreeNode<T>? parent)
         {
+            Value = value;
             Name = name;
             Parent = parent;
         }
 
-        public void CreateChild(string name)
+        public void CreateChild(T value, string name)
         {
-            ChildNodes.Add(name, new TreeNode(name, this));
+            ChildNodes.Add(name, new TreeNode<T>(value, name, this));
         }
 
-        public TreeNode GetOrCreateChild(string name)
+        public TreeNode<T> GetOrCreateChild(T value,string name)
         {
             if (!ChildNodes.ContainsKey(name))
             {
-                CreateChild(name);
+                CreateChild(value, name);
             }
             return ChildNodes[name];
         }
