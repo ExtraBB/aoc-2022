@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace aoc_2022_test.Tests;
 
 public class DaysTests
@@ -41,6 +39,10 @@ public class DaysTests
     [InlineData(9, 1, "Actual", "6181")]
     [InlineData(9, 2, "Examples", "36")]
     [InlineData(9, 2, "Actual", "2386")]
+    [InlineData(10, 1, "Examples", "13140")]
+    [InlineData(10, 1, "Actual", "17940")]
+    [InlineData(10, 2, "Examples", "##..##..##..##..##..##..##..##..##..##..\r\n###...###...###...###...###...###...###.\r\n####....####....####....####....####....\r\n#####.....#####.....#####.....#####.....\r\n######......######......######......####\r\n#######.......#######.......#######.....")]
+    [InlineData(10, 2, "Actual", "2386")]
     public void TestAll(int day, int part, string folder, string expected)
     {
         // Arrange
