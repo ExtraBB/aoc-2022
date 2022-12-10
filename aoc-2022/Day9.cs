@@ -1,11 +1,4 @@
-﻿using Microsoft.Diagnostics.Tracing.Parsers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace aoc_2022
 {
@@ -75,7 +68,7 @@ namespace aoc_2022
             }
 
             sb.AppendLine();
-            Debug.Write(sb.ToString());
+            Console.Write(sb.ToString());
         }
 
         private void MoveSteps(int[] xs, int[] ys, int dx, int dy, int steps, HashSet<Location> seen)
@@ -127,7 +120,6 @@ namespace aoc_2022
                         seen.Add(new Location(xs[j], ys[j]));
                     }
                 }
-                PrintGrid(xs, ys, 26);
             }
         }
 
