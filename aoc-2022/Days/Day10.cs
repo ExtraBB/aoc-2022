@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public class Day10 : IDay
     {
@@ -8,7 +8,7 @@ namespace aoc_2022
         {
             int result = 0;
 
-            Run(filePath, (int x, int cycle) =>
+            Run(filePath, (x, cycle) =>
             {
                 if ((cycle + 20) % 40 == 0)
                 {
@@ -24,9 +24,9 @@ namespace aoc_2022
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();
 
-            Run(filePath, (int x, int cycle) =>
+            Run(filePath, (x, cycle) =>
             {
-                bool spriteVisible = new int[] { ((cycle - 1) % 40) - 1, (cycle - 1) % 40, ((cycle - 1) % 40) + 1 }
+                bool spriteVisible = new int[] { (cycle - 1) % 40 - 1, (cycle - 1) % 40, (cycle - 1) % 40 + 1 }
                     .Where(c => c >= 0 && c < 40)
                     .Any(c => c == x);
 

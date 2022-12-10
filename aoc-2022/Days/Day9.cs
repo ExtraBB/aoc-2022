@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public record Location(int X, int Y);
 
@@ -44,7 +44,7 @@ namespace aoc_2022
         {
             StringBuilder sb = new StringBuilder();
 
-            for (int y = -size/2; y < size / 2; y++)
+            for (int y = -size / 2; y < size / 2; y++)
             {
                 string line = "";
                 for (int x = -size / 2; x < size / 2; x++)
@@ -81,7 +81,7 @@ namespace aoc_2022
                 xs[0] += dx;
                 ys[0] += dy;
 
-                for(int j = 1; j < xs.Length; j++)
+                for (int j = 1; j < xs.Length; j++)
                 {
                     int xDist = Math.Abs(xs[j - 1] - xs[j]);
                     int yDist = Math.Abs(ys[j - 1] - ys[j]);

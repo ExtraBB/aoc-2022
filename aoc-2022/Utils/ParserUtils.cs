@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace aoc_2022
+namespace aoc_2022.Utils
 {
-    public static class Helpers
+    public static class ParserUtils
     {
         public static string[] ParseGroupsFromString(Regex regex, string input)
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aoc_2022.DataStructures
+namespace aoc_2022.Utils
 {
     public class TreeNode<T>
     {
@@ -25,7 +25,7 @@ namespace aoc_2022.DataStructures
             ChildNodes.Add(name, new TreeNode<T>(value, name, this));
         }
 
-        public TreeNode<T> GetOrCreateChild(T value,string name)
+        public TreeNode<T> GetOrCreateChild(T value, string name)
         {
             if (!ChildNodes.ContainsKey(name))
             {

@@ -1,5 +1,4 @@
-﻿
-namespace aoc_2022
+﻿namespace aoc_2022.Days
 {
     public class Day8 : IDay
     {
@@ -35,7 +34,7 @@ namespace aoc_2022
             {
                 for (int y = 0; y < grid.GetLength(1); y++)
                 {
-                    int scenicScore = 
+                    int scenicScore =
                         TreesVisibleInDirection(grid, x, y, -1, 0, true) *
                         TreesVisibleInDirection(grid, x, y, 1, 0, true) *
                         TreesVisibleInDirection(grid, x, y, 0, -1, true) *

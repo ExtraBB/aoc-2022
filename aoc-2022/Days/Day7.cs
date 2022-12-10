@@ -1,6 +1,6 @@
-﻿using aoc_2022.DataStructures;
+﻿using aoc_2022.Utils;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public class Day7 : IDay
     {

@@ -1,7 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using aoc_2022.Utils;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public class Day5 : IDay
     {
@@ -61,10 +62,10 @@ namespace aoc_2022
         {
             return input
                 .Split(Environment.NewLine)
-                .Select(line => Helpers.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
+                .Select(line => ParserUtils.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
         }
 
-        private void MoveFromStack(Stack<char> from, Stack<char> to, int numToMove) 
+        private void MoveFromStack(Stack<char> from, Stack<char> to, int numToMove)
         {
             for (int i = 0; i < numToMove; i++)
             {

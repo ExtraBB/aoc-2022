@@ -1,4 +1,4 @@
-﻿namespace aoc_2022
+﻿namespace aoc_2022.Days
 {
     public class Day3 : IDay
     {

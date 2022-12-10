@@ -16,3 +16,6 @@ The solutions can be benchmarked using the `aoc-2022-benchmark` project:
 ```
 dotnet test aoc-2022-benchmark
 ```
+
+## Input data
+The input data is stored in the `aoc-2022-data` project, which is referenced by both the `aoc-2022-test` and `aoc-2022-benchmark` project.

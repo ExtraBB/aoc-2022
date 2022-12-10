@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace aoc_2022_test
 {
-    public static class Utils
+    public static class TestUtils
     {
         public static Type GetType(string typeName)
         {

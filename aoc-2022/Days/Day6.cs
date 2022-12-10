@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public class Day6 : IDay
     {

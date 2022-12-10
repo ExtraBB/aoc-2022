@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using aoc_2022.Utils;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public class Day4 : IDay
     {
@@ -9,7 +10,7 @@ namespace aoc_2022
         public string Part1(string filePath)
         {
             return File.ReadAllLines(filePath)
-                .Select(line => Helpers.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
+                .Select(line => ParserUtils.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
                 .Count(IsFullyContained)
                 .ToString();
         }
@@ -17,7 +18,7 @@ namespace aoc_2022
         public string Part2(string filePath)
         {
             return File.ReadAllLines(filePath)
-                .Select(line => Helpers.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
+                .Select(line => ParserUtils.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
                 .Count(Overlap)
                 .ToString();
         }
@@ -25,7 +26,7 @@ namespace aoc_2022
         private bool IsFullyContained(int[] ranges)
         {
             int overlap = GetOverlap(ranges);
-            return overlap == (ranges[1] - ranges[0] + 1) || overlap == (ranges[3] - ranges[2] + 1);
+            return overlap == ranges[1] - ranges[0] + 1 || overlap == ranges[3] - ranges[2] + 1;
         }
 
         private bool Overlap(int[] ranges)

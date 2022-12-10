@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aoc_2022
+namespace aoc_2022.Days
 {
     public interface IDay
     {
