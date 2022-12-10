@@ -1,7 +1,7 @@
 ﻿using aoc_2022;
 using BenchmarkDotNet.Attributes;
 
-namespace aoc_2022_test.Benchmarks
+namespace aoc_2022_benchmark
 {
     public class DaysBenchmark
     {
