@@ -1,4 +1,4 @@
-﻿using aoc_2022;
+﻿using aoc_2022.Days;
 using BenchmarkDotNet.Attributes;
 
 namespace aoc_2022_benchmark
