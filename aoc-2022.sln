@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aoc-2022-benchmark", "aoc-2022-benchmark\aoc-2022-benchmark.csproj", "{DB70E951-5F9B-49F1-AEE1-DD5A1D196685}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aoc-2022-data", "aoc-2022-data\aoc-2022-data.csproj", "{10DF2478-57B5-4A45-8CAC-7A9B1638B86C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DB70E951-5F9B-49F1-AEE1-DD5A1D196685}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB70E951-5F9B-49F1-AEE1-DD5A1D196685}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB70E951-5F9B-49F1-AEE1-DD5A1D196685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10DF2478-57B5-4A45-8CAC-7A9B1638B86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DF2478-57B5-4A45-8CAC-7A9B1638B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DF2478-57B5-4A45-8CAC-7A9B1638B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DF2478-57B5-4A45-8CAC-7A9B1638B86C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
