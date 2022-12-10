@@ -42,5 +42,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Benchmark
-      run: dotnet test aoc-2022-benchmark -l "console;verbosity=detailed" | sed -n '/Summary/,/Warnings/{/Summary/b;/Warnings/b;p}' >> $GITHUB_STEP_SUMMARY
+      run: dotnet test aoc-2022-benchmark --no-build --verbosity normal | sed -n '/Summary/,/Warnings/{/Summary/b;/Warnings/b;p}' >> $GITHUB_STEP_SUMMARY
 
