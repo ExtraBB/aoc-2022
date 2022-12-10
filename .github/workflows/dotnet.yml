@@ -42,4 +42,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Benchmark
-      run: dotnet test aoc-2022-benchmark --no-build --verbosity normal
+      run: GITHUB_STEP_SUMMARY=$(dotnet test aoc-2022-benchmark --no-build --verbosity normal | grep -o -P '(?<=\/\/\* Summary \*).*(?=\/\/ \* Warnings \*)')
+
