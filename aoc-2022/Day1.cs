@@ -17,9 +17,9 @@ public class Day1 : IDay
     private IEnumerable<int> ExtractOrderedCalorieTotalsFromFile(string filePath)
     {
         return File.ReadAllText(filePath)
-            .Split("\r\n\r\n")
+            .Split(Environment.NewLine + Environment.NewLine)
             .Select(group => group
-                .Split("\r\n")
+                .Split(Environment.NewLine)
                 .Select(int.Parse)
                 .Sum())
             .OrderByDescending(g => g);

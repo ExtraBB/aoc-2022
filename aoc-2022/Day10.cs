@@ -22,6 +22,7 @@ namespace aoc_2022
         public string Part2(string filePath)
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine();
 
             Run(filePath, (int x, int cycle) =>
             {
@@ -32,7 +33,7 @@ namespace aoc_2022
                 sb.Append(spriteVisible ? "#" : ".");
                 if (cycle % 40 == 0)
                 {
-                    sb.Append("\r\n");
+                    sb.Append(Environment.NewLine);
                 }
             });
 

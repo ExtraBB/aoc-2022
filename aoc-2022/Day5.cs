@@ -19,7 +19,7 @@ namespace aoc_2022
 
         private string ProcessInstructions(string filePath, int part)
         {
-            var split = File.ReadAllText(filePath).Split("\r\n\r\n");
+            var split = File.ReadAllText(filePath).Split(Environment.NewLine + Environment.NewLine);
             var stacks = ParseStacks(split[0]);
             var instructions = ParseInstructions(split[1]);
 
@@ -50,7 +50,7 @@ namespace aoc_2022
 
         private List<Stack<char>> ParseStacks(string input)
         {
-            var lines = input.Split("\r\n");
+            var lines = input.Split(Environment.NewLine);
             return Enumerable
                 .Range(0, lines.Last().Length / 4 + 1)
                 .Select(i => new Stack<char>(lines.Select(l => l[i * 4 + 1]).Where(char.IsLetter).Reverse()))
@@ -60,7 +60,7 @@ namespace aoc_2022
         private IEnumerable<int[]> ParseInstructions(string input)
         {
             return input
-                .Split("\r\n")
+                .Split(Environment.NewLine)
                 .Select(line => Helpers.ParseGroupsFromStringAndConvert(instructionRegex, line, int.Parse));
         }
 
