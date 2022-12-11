@@ -20,8 +20,8 @@ public class Day11Tests
     }
 
     [Theory]
-    [InlineData("examples", "")]
-    [InlineData("actual", "")]
+    [InlineData("examples", "2713310158")]
+    [InlineData("actual", "15447387620")]
     public void Part2(string folder, string expected)
     {
         // Arrange

@@ -1,18 +1,26 @@
-﻿using aoc_2022.Utils;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace aoc_2022.Days
 {
     public class Day11 : IDay
     {
-        Regex itemsRegex = new Regex(@".* (\d+,?)*");
         public string Part1(string filePath)
         {
-            List<Monkey> monkeys = ParseMonkeys(filePath);
+            return Run(filePath, true);
+        }
 
-            for (int i = 0; i < 20; i++)
+        public string Part2(string filePath)
+        {
+            return Run(filePath, false);
+        }
+
+        private string Run(string filePath, bool part1)
+        {
+            List<Monkey> monkeys = ParseMonkeys(filePath, part1);
+
+            for (long i = 0; i < (part1 ? 20 : 10000); i++)
             {
-                foreach(var monkey in monkeys)
+                foreach (var monkey in monkeys)
                 {
                     monkey.PerformRound();
                 }
@@ -23,12 +31,7 @@ namespace aoc_2022.Days
             return (ordered[0].NumberOfInspections * ordered[1].NumberOfInspections).ToString();
         }
 
-        public string Part2(string filePath)
-        {
-            throw new NotImplementedException();
-        }
-
-        private List<Monkey> ParseMonkeys(string filePath)
+        private List<Monkey> ParseMonkeys(string filePath, bool part1)
         {
             List<Monkey> monkeys = new List<Monkey>();
             Dictionary<int, int> PositiveTestMonkeys = new Dictionary<int, int>();
@@ -38,27 +41,29 @@ namespace aoc_2022.Days
             foreach(var monkey in File.ReadAllText(filePath).Split(Environment.NewLine + Environment.NewLine))
             {
                 var lines = monkey.Split(Environment.NewLine);
-                var items = lines[1].Split(":")[1].Split(",").Select(x => int.Parse(x.Trim()));
+                var items = lines[1].Split(":")[1].Split(",").Select(x => long.Parse(x.Trim()));
+                var divisibleBy = long.Parse(lines[3].Split(" ").Last());
                 var operation = ParseOperation(lines[2].Split(":")[1].Trim());
-                var test = (int i) => i % int.Parse(lines[3].Split(" ").Last()) == 0;
 
                 PositiveTestMonkeys[counter] = int.Parse(lines[4].Split(" ").Last());
                 NegativeTestMonkeys[counter] = int.Parse(lines[5].Split(" ").Last());
 
-                monkeys.Add(new Monkey(items, operation, test));
+                monkeys.Add(new Monkey(items, operation, divisibleBy, part1));
                 counter++;
             }
 
+            long combinedMod = monkeys.Aggregate(1L, (i, j) => i * j.DivisibleBy);
             for(int i = 0; i < counter; i++)
             {
                 monkeys[i].PositiveTestMonkey = monkeys[PositiveTestMonkeys[i]];
                 monkeys[i].NegativeTestMonkey = monkeys[NegativeTestMonkeys[i]];
+                monkeys[i].CombinedMod = combinedMod;
             }
 
             return monkeys;
         }
 
-        private Func<int, int> ParseOperation(string operation)
+        private Func<long, long> ParseOperation(string operation)
         {
             var args = operation.Split(" ");
 
@@ -70,7 +75,7 @@ namespace aoc_2022.Days
             }
             else
             {
-                var parsedArg = int.Parse(args[4]);
+                var parsedArg = long.Parse(args[4]);
                 return args[3] == "+"
                     ? (i => i + parsedArg)
                     : (i => i * parsedArg);
@@ -80,30 +85,36 @@ namespace aoc_2022.Days
 
     public class Monkey
     {
-        public int NumberOfInspections { get; private set; } = 0;
+        public long NumberOfInspections { get; private set; } = 0;
         public Monkey? PositiveTestMonkey { get; set; }
         public Monkey? NegativeTestMonkey { get; set; }
-        public Queue<int> Items { get; }
+        public Queue<long> Items { get; }
+        public long CombinedMod { get; set; }
+        public long DivisibleBy { get; private set; }
 
-        private Func<int, int> operation;
-        private Func<int, bool> test;
+        private Func<long, long> operation;
+        private bool part1;
 
-        public Monkey(IEnumerable<int> startingItems, Func<int, int> operation, Func<int, bool> test)
+        public Monkey(IEnumerable<long> startingItems, Func<long, long> operation, long divisibleBy, bool part1)
         {
-            this.Items = new Queue<int>(startingItems);
+            this.Items = new Queue<long>(startingItems);
             this.operation = operation;
-            this.test = test;
+            this.DivisibleBy = divisibleBy;
+            this.part1 = part1;
         }
 
         public void PerformRound()
         {
             while(Items.Count > 0)
             {
-                int item = Items.Dequeue();
-                item = operation(item);
-                item /= 3;
+                long item = Items.Dequeue();
+
+                item = part1
+                    ? operation(item) / 3
+                    : operation(item) % CombinedMod;
+
                 NumberOfInspections++;
-                (test(item) ? PositiveTestMonkey : NegativeTestMonkey)?.Items.Enqueue(item);
+                (item % DivisibleBy == 0 ? PositiveTestMonkey : NegativeTestMonkey)?.Items.Enqueue(item);
             }
         }
     }
