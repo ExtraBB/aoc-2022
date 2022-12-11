@@ -124,5 +124,17 @@ namespace aoc_2022_benchmark
         {
             new Day10().Part2("./actual/10.txt");
         }
+
+        [Benchmark]
+        public void Day11Part1()
+        {
+            new Day11().Part1("./actual/11.txt");
+        }
+
+        [Benchmark]
+        public void Day11Part2()
+        {
+            new Day11().Part2("./actual/11.txt");
+        }
     }
 }
