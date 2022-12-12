@@ -8,79 +8,60 @@ namespace aoc_2022.Days
         public string Part1(string filePath)
         {
             (int[,] grid, Location start, Location end) = ParseGrid(filePath);
-            var seen = Run(grid, start, end, true);
-            return seen[end].ToString();
+            return Run(grid, start, end).ToString();
         }
 
         public string Part2(string filePath)
         {
-            (int[,] grid, Location start, Location end) = ParseGrid(filePath);
-            var seen = Run(grid, end, null, false);
-            return seen.Where(kvp => grid[kvp.Key.X, kvp.Key.Y] == 1).Max(kvp => kvp.Value).ToString();
+            (int[,] grid, Location _, Location end) = ParseGrid(filePath);
+            return Run(grid, end, null).ToString();
         }
 
-        private Dictionary<Location, int> Run(int[,] grid, Location start, Location end, bool part1)
+        private int Run(int[,] grid, Location start, Location? end)
         {
-            Dictionary<Location, int> seen = new Dictionary<Location, int>();
+            HashSet<Location> seen = new HashSet<Location>();
+            List<Location> candidates = new List<Location>() { start };
+            bool part1 = end != null;
 
-            Queue<Location> next = new Queue<Location>();
-            next.Enqueue(start);
-
-            for (int i = 0; i < int.MaxValue; i++)
+            int i = 0;
+            while(candidates.Any())
             {
-                Queue<Location> nextIteration = new Queue<Location>();
-                while (next.Count > 0)
+                List<Location> nextCandidates = new List<Location>();
+
+                foreach(Location current in candidates)
                 {
-                    Location n = next.Dequeue();
-                    if (seen.ContainsKey(n))
+                    if (seen.Contains(current)) continue;
+                    seen.Add(current);
+
+                    if (part1 && current == end || !part1 && grid[current.X, current.Y] == 1)
                     {
-                        continue;
-                    } 
-                    else
-                    {
-                        seen[n] = i;
+                        return i;
                     }
 
-                    if (n == end || (!part1 && grid[n.X, n.Y] == 1))
-                    {
-                        return seen;
-                    }
-
-                    var candidates = new[]
-                    {
-                        CheckDirection(grid, n, 1, 0, part1),
-                        CheckDirection(grid, n, -1, 0, part1),
-                        CheckDirection(grid, n, 0, -1, part1),
-                        CheckDirection(grid, n, 0, 1, part1)
-                    }.Where(l => l != null && !seen.ContainsKey(l));
-
-                    foreach(var c in candidates)
-                    {
-                        nextIteration.Enqueue(c);
-                    }
+                    nextCandidates.AddRange(new[] {
+                        new Location(current.X + 1, current.Y),
+                        new Location(current.X - 1, current.Y),
+                        new Location(current.X, current.Y + 1),
+                        new Location(current.X, current.Y - 1)
+                    }.Where(next => IsValidDirection(grid, current, next, part1)));
                 }
-                next = nextIteration;
+                candidates = nextCandidates;
+                i++;
             }
 
-            return seen;
+            return 0;
         }
 
-        private Location? CheckDirection(int[,] grid, Location current, int dx, int dy, bool part1)
+        private bool IsValidDirection(int[,] grid, Location current, Location next, bool part1)
         {
-            Location next = new Location(current.X + dx, current.Y + dy);
-            if (next.X >= 0 && next.X < grid.GetLength(0) && next.Y >= 0 && next.Y < grid.GetLength(1))
+            if (next.X < 0 || next.X >= grid.GetLength(0) || next.Y < 0 || next.Y >= grid.GetLength(1))
             {
-                if (part1)
-                {
-                    return grid[next.X, next.Y] - grid[current.X, current.Y] <= 1 ? next : null;
-                }
-                else
-                {
-                    return grid[current.X, current.Y] - grid[next.X, next.Y] <= 1 ? next : null;
-                }
+                return false;
             }
 
-            return null;
+            return part1
+                ? grid[next.X, next.Y] - grid[current.X, current.Y] <= 1
+                : grid[current.X, current.Y] - grid[next.X, next.Y] <= 1;
         }
 
         private (int[,] grid, Location start, Location end) ParseGrid(string filePath)
