@@ -1,9 +1,8 @@
-﻿using System.Text;
+﻿using aoc_2022.Utils;
+using System.Text;
 
 namespace aoc_2022.Days
 {
-    public record Location(int X, int Y);
-
     public class Day9 : IDay
     {
         public string Part1(string filePath)
