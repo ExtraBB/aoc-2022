@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using aoc_2022.Utils;
+﻿using System.Text.Json.Nodes;
 
 namespace aoc_2022.Days;
 
@@ -13,10 +12,10 @@ public class Day13 : IDay
         foreach (string pair in pairs)
         {
             var lines = pair.Split("\n");
-            var left = ParseLine(lines[0]);
-            var right = ParseLine(lines[1]);
+            var left = JsonNode.Parse(lines[0]);
+            var right = JsonNode.Parse(lines[1]);
 
-            if (CompareOrder(left, right) < 1)
+            if (CompareOrder(left, right) == -1)
             {
                 Console.WriteLine(index);
                 result += index;
@@ -33,77 +32,34 @@ public class Day13 : IDay
         throw new NotImplementedException();
     }
 
-    private int CompareOrder(TreeNode left, TreeNode right)
+    private int CompareOrder(JsonNode left, JsonNode right)
     {
-        if (left.IsLeaf() && right.IsLeaf())
+        if (left is JsonValue && right is JsonValue)
         {
-            return Math.Sign(left.Value - right.Value);
+            return Math.Sign(left.GetValue<int>() - right.GetValue<int>());
         }
-        else if (!left.IsLeaf() && right.IsLeaf())
+        else if (left is JsonArray && right is JsonValue)
         {
-            return CompareOrder(left, new TreeNode(new List<TreeNode>() { right }, -1));
+            return CompareOrder(left, new JsonArray(right.GetValue<int>()));
         }
-        else if (left.IsLeaf() && !right.IsLeaf())
+        else if (left is JsonValue && right is JsonArray)
         {
-            return CompareOrder(new TreeNode(new List<TreeNode>() { left }, -1), right);
+            return CompareOrder(new JsonArray(left.GetValue<int>()), right);
         }
         else
         {
-            for (int i = 0; i < left.Children.Count; i++)
+            var leftArray = left.AsArray();
+            var rightArray = right.AsArray();
+
+            for (int i = 0; i < Math.Min(leftArray.Count, rightArray.Count); i++)
             {
-                if (i >= right.Children.Count)
-                {
-                    return 1;
-                }
-                int comparison = CompareOrder(left.Children[i], right.Children[i]);
+                int comparison = CompareOrder(leftArray[i], rightArray[i]);
                 if (comparison != 0)
                 {
                     return comparison;
                 }
             }
-            return 0;
+            return Math.Sign(leftArray.Count - rightArray.Count);
         }
-    }
-
-    private TreeNode ParseLine(string line)
-    {
-        TreeNode root = new TreeNode(new List<TreeNode>(), -1);
-        int start = 1;
-        BuildTree(root, line, ref start);
-        return root;
-    }
-
-    private void BuildTree(TreeNode parentNode, string line, ref int i)
-    {
-        while (i < line.Length)
-        {
-            char c = line[i];
-            i++;
-            if (c == '[')
-            {
-                TreeNode newNode = new TreeNode(new List<TreeNode>(), -1);
-                BuildTree(newNode, line, ref i);
-                parentNode.Children.Add(newNode);
-            }
-            else if (c == ']')
-            {
-                return;
-            }
-            else if (char.IsDigit(c))
-            {
-                parentNode.Children.Add(new TreeNode(new List<TreeNode>(), c - '0'));
-            }
-        }
-    }
-
-}
-
-internal record TreeNode(List<TreeNode> Children, int Value);
-
-internal static class TreeNodeExtensions
-{
-    internal static bool IsLeaf(this TreeNode node)
-    {
-        return node.Value != -1;
     }
 }

@@ -6,7 +6,7 @@ public class Day13Tests
 {
     [Theory]
     [InlineData("examples", "13")]
-    [InlineData("actual", "13")]
+    [InlineData("actual", "6070")]
     public void Part1(string folder, string expected)
     {
         // Arrange
