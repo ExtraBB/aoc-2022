@@ -18,4 +18,19 @@ public class Day13Tests
         // Assert
         Assert.Equal(expected, actual);
     }
+
+    [Theory]
+    [InlineData("examples", "140")]
+    [InlineData("actual", "20758")]
+    public void Part2(string folder, string expected)
+    {
+        // Arrange
+        Day13 day = new Day13();
+
+        // Act
+        string actual = day.Part2($"./{folder}/13.txt");
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
 }
