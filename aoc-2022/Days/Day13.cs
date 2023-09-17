@@ -4,7 +4,7 @@ namespace aoc_2022.Days;
 
 public class Day13 : IDay
 {
-    public string Part1(string filePath)
+    public string Part1(string filePath, bool debug = false)
     {
         var nodes = ParsePackets(filePath);
         var comparer = new PacketComparer();
@@ -21,7 +21,7 @@ public class Day13 : IDay
         return result.ToString();
     }
 
-    public string Part2(string filePath)
+    public string Part2(string filePath, bool debug = false)
     {
         var comparer = new PacketComparer();
         var nodes = ParsePackets(filePath);

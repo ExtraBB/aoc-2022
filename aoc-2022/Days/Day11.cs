@@ -4,12 +4,12 @@ namespace aoc_2022.Days
 {
     public class Day11 : IDay
     {
-        public string Part1(string filePath)
+        public string Part1(string filePath, bool debug = false)
         {
             return Run(filePath, true);
         }
 
-        public string Part2(string filePath)
+        public string Part2(string filePath, bool debug = false)
         {
             return Run(filePath, false);
         }
@@ -38,7 +38,7 @@ namespace aoc_2022.Days
             Dictionary<int, int> NegativeTestMonkeys = new Dictionary<int, int>();
 
             int counter = 0;
-            foreach(var monkey in File.ReadAllText(filePath).Split(Environment.NewLine + Environment.NewLine))
+            foreach (var monkey in File.ReadAllText(filePath).Split(Environment.NewLine + Environment.NewLine))
             {
                 var lines = monkey.Split(Environment.NewLine);
                 var items = lines[1].Split(":")[1].Split(",").Select(x => long.Parse(x.Trim()));
@@ -53,7 +53,7 @@ namespace aoc_2022.Days
             }
 
             long combinedMod = monkeys.Aggregate(1L, (i, j) => i * j.DivisibleBy);
-            for(int i = 0; i < counter; i++)
+            for (int i = 0; i < counter; i++)
             {
                 monkeys[i].PositiveTestMonkey = monkeys[PositiveTestMonkeys[i]];
                 monkeys[i].NegativeTestMonkey = monkeys[NegativeTestMonkeys[i]];
@@ -105,7 +105,7 @@ namespace aoc_2022.Days
 
         public void PerformRound()
         {
-            while(Items.Count > 0)
+            while (Items.Count > 0)
             {
                 long item = Items.Dequeue();
 

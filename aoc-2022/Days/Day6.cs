@@ -4,12 +4,12 @@ namespace aoc_2022.Days
 {
     public class Day6 : IDay
     {
-        public string Part1(string filePath)
+        public string Part1(string filePath, bool debug = false)
         {
             return FindStartMarker(filePath, 4).ToString();
         }
 
-        public string Part2(string filePath)
+        public string Part2(string filePath, bool debug = false)
         {
             return FindStartMarker(filePath, 14).ToString();
         }

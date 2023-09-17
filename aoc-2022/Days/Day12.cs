@@ -5,13 +5,13 @@ namespace aoc_2022.Days
 {
     public class Day12 : IDay
     {
-        public string Part1(string filePath)
+        public string Part1(string filePath, bool debug = false)
         {
             (int[,] grid, Location start, Location end) = ParseGrid(filePath);
             return Run(grid, start, end).ToString();
         }
 
-        public string Part2(string filePath)
+        public string Part2(string filePath, bool debug = false)
         {
             (int[,] grid, Location _, Location end) = ParseGrid(filePath);
             return Run(grid, end, null).ToString();
@@ -24,11 +24,11 @@ namespace aoc_2022.Days
             bool part1 = end != null;
 
             int i = 0;
-            while(candidates.Any())
+            while (candidates.Any())
             {
                 List<Location> nextCandidates = new List<Location>();
 
-                foreach(Location current in candidates)
+                foreach (Location current in candidates)
                 {
                     if (seen.Contains(current)) continue;
                     seen.Add(current);
@@ -72,7 +72,7 @@ namespace aoc_2022.Days
 
             int[,] grid = new int[lines[0].Length, lines.Length];
 
-            for(int y = 0; y < lines.Length; y++)
+            for (int y = 0; y < lines.Length; y++)
             {
                 for (int x = 0; x < lines[0].Length; x++)
                 {

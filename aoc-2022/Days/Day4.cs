@@ -7,7 +7,7 @@ namespace aoc_2022.Days
     {
         Regex regex = new Regex(@"(\d{1,2})\-(\d{1,2})\,(\d{1,2})\-(\d{1,2})");
 
-        public string Part1(string filePath)
+        public string Part1(string filePath, bool debug = false)
         {
             return File.ReadAllLines(filePath)
                 .Select(line => ParserUtils.ParseGroupsFromStringAndConvert(regex, line, int.Parse))
@@ -15,7 +15,7 @@ namespace aoc_2022.Days
                 .ToString();
         }
 
-        public string Part2(string filePath)
+        public string Part2(string filePath, bool debug = false)
         {
             return File.ReadAllLines(filePath)
                 .Select(line => ParserUtils.ParseGroupsFromStringAndConvert(regex, line, int.Parse))

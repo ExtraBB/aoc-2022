@@ -2,7 +2,7 @@
 {
     public class Day8 : IDay
     {
-        public string Part1(string filePath)
+        public string Part1(string filePath, bool debug = false)
         {
             var grid = ParseGrid(filePath);
 
@@ -25,7 +25,7 @@
             return visible.ToString();
         }
 
-        public string Part2(string filePath)
+        public string Part2(string filePath, bool debug = false)
         {
             var grid = ParseGrid(filePath);
             int maxScore = 0;
