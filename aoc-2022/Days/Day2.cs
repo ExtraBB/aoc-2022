@@ -28,12 +28,12 @@
             {"C Z", 1 + 6 },
         };
 
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             return File.ReadAllLines(filePath).Sum(line => scoresPart1[line]).ToString();
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             return File.ReadAllLines(filePath).Sum(line => scoresPart2[line]).ToString();
         }

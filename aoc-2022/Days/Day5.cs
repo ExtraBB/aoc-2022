@@ -8,12 +8,12 @@ namespace aoc_2022.Days
     {
         Regex instructionRegex = new Regex(@"move (\d+) from (\d+) to (\d+)");
 
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             return ProcessInstructions(filePath, 1);
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             return ProcessInstructions(filePath, 2);
         }

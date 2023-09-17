@@ -4,7 +4,7 @@ namespace aoc_2022.Days
 {
     public class Day10 : IDay
     {
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             int result = 0;
 
@@ -19,7 +19,7 @@ namespace aoc_2022.Days
             return result.ToString();
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();

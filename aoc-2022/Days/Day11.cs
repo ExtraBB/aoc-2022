@@ -4,12 +4,12 @@ namespace aoc_2022.Days
 {
     public class Day11 : IDay
     {
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             return Run(filePath, true);
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             return Run(filePath, false);
         }

@@ -3,21 +3,23 @@ namespace aoc_2022.Days;
 public class Day14 : IDay
 {
     const int ROWS = 200;
-    const int COLUMNS = 600;
+    const int COLUMNS = 800;
 
-    public string Part1(string filePath, bool debug = false)
+    public string Part1(string filePath)
     {
         var lines = File.ReadAllLines(filePath);
-        var cave = ParseCave(lines);
-        return Run(cave, debug).ToString();
+        var cave = ParseCave(lines, false);
+        return Run(cave).ToString();
     }
 
-    public string Part2(string filePath, bool debug = false)
+    public string Part2(string filePath)
     {
-        throw new NotImplementedException();
+        var lines = File.ReadAllLines(filePath);
+        var cave = ParseCave(lines, true);
+        return Run(cave).ToString();
     }
 
-    private char[,] ParseCave(string[] lines)
+    private char[,] ParseCave(string[] lines, bool hasFloor)
     {
         var parsed = lines.Select(line => line
                         .Split(" -> ")
@@ -29,6 +31,7 @@ public class Day14 : IDay
 
         char[,] cave = new char[COLUMNS, ROWS];
 
+        // Fill empty space
         for (int y = 0; y < ROWS; y++)
         {
             for (int x = 0; x < COLUMNS; x++)
@@ -37,6 +40,7 @@ public class Day14 : IDay
             }
         }
 
+        // Add walls
         foreach (var wall in parsed)
         {
             for (int i = 0; i + 1 < wall.Length; i++)
@@ -58,30 +62,20 @@ public class Day14 : IDay
             }
         }
 
+        // Add floor
+        if (hasFloor)
+        {
+            int maxY = Enumerable.Range(0, ROWS - 1).Reverse().First(y => Enumerable.Range(0, COLUMNS - 1).Any(x => cave[x, y] != '.'));
+            for (int x = 0; x < COLUMNS; x++)
+            {
+                cave[x, maxY + 2] = '#';
+            }
+        }
+
         return cave;
     }
 
-    private void PrintCave(char[,] cave)
-    {
-        int minX = Enumerable.Range(0, COLUMNS - 1).First(x => Enumerable.Range(0, ROWS - 1).Any(y => cave[x, y] != '.'));
-        int maxX = Enumerable.Range(minX + 1, COLUMNS - minX - 1).First(x => Enumerable.Range(0, ROWS - 1).All(y => cave[x, y] == '.')) - 1;
-
-        int minY = 0;
-        int maxY = Enumerable.Range(0, ROWS - 1).Reverse().First(y => Enumerable.Range(0, COLUMNS - 1).Any(x => cave[x, y] != '.')) + 1;
-
-        Console.Clear();
-        for (int y = minY; y < maxY; y++)
-        {
-            Console.Write(y);
-            for (int x = minX; x < maxX; x++)
-            {
-                Console.Write(cave[x, y]);
-            }
-            Console.Write("\r\n");
-        }
-    }
-
-    private int Run(char[,] cave, bool debug)
+    private int Run(char[,] cave)
     {
         int x = 500, y = 0;
         int maxY = Enumerable.Range(0, ROWS - 1).Reverse().First(y => Enumerable.Range(0, COLUMNS - 1).Any(x => cave[x, y] != '.')) + 1;
@@ -90,11 +84,6 @@ public class Day14 : IDay
         while (!TickSand(cave, x, y, maxY))
         {
             sandDropped++;
-            if (debug)
-            {
-                PrintCave(cave);
-                Task.Delay(200).Wait();
-            }
         }
 
         return sandDropped;
@@ -102,7 +91,7 @@ public class Day14 : IDay
 
     private bool TickSand(char[,] cave, int x, int y, int maxY)
     {
-        if (y + 1 > maxY)
+        if (y + 1 > maxY || cave[x, y] == 'o')
         {
             return true;
         }

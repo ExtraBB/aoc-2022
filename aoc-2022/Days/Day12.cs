@@ -5,13 +5,13 @@ namespace aoc_2022.Days
 {
     public class Day12 : IDay
     {
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             (int[,] grid, Location start, Location end) = ParseGrid(filePath);
             return Run(grid, start, end).ToString();
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             (int[,] grid, Location _, Location end) = ParseGrid(filePath);
             return Run(grid, end, null).ToString();

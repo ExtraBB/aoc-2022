@@ -2,7 +2,7 @@
 {
     public class Day3 : IDay
     {
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             return File.ReadAllLines(filePath)
                 .Select(line => new[] { line.Take(line.Length / 2), line.Skip(line.Length / 2) })
@@ -12,7 +12,7 @@
                 .ToString();
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             return File.ReadAllLines(filePath)
                 .Chunk(3)

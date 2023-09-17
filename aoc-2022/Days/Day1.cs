@@ -2,13 +2,13 @@
 
 public class Day1 : IDay
 {
-    public string Part1(string filePath, bool debug = false)
+    public string Part1(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
         return calories.First().ToString();
     }
 
-    public string Part2(string filePath, bool debug = false)
+    public string Part2(string filePath)
     {
         var calories = ExtractOrderedCalorieTotalsFromFile(filePath);
         return calories.Take(3).Sum().ToString();

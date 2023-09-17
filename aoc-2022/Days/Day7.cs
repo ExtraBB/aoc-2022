@@ -4,7 +4,7 @@ namespace aoc_2022.Days
 {
     public class Day7 : IDay
     {
-        public string Part1(string filePath, bool debug = false)
+        public string Part1(string filePath)
         {
             TreeNode<int> tree = BuildTree(filePath);
             List<int> sizes = new List<int>();
@@ -12,7 +12,7 @@ namespace aoc_2022.Days
             return sizes.Where(size => size <= 100_000).Sum().ToString();
         }
 
-        public string Part2(string filePath, bool debug = false)
+        public string Part2(string filePath)
         {
             TreeNode<int> tree = BuildTree(filePath);
             List<int> sizes = new List<int>();
